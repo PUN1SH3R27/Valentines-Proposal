@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Valentine Message 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #6c5b7b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .float-heart {
+            position: absolute;
+            font-size: 25px;
+            opacity: 0.6;
+            animation: floatUp 8s infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #c06c84;
+            font-size: 32px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .encrypted-section {
+            background: #f8f8f8;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 2px dashed #ff6b9d;
+        }
+
+        .encrypted-message {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.8;
+            text-align: center;
+            word-break: break-all;
+            margin-bottom: 20px;
+        }
+
+        .decode-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .decode-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #6c5b7b;
+            font-weight: bold;
+        }
+
+        .decode-input {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #ff6b9d;
+            border-radius: 25px;
+            width: 200px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .decode-input:focus {
+            outline: none;
+            border-color: #c06c84;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        .decode-btn {
+            padding: 12px 40px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #ff6b9d, #c06c84);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .decode-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .hint {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+            font-size: 14px;
+            color: #856404;
+        }
+
+        .dog-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .dog-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .decoded-message {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            animation: revealMessage 0.8s ease-out;
+        }
+
+        @keyframes revealMessage {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .decoded-message h2 {
+            font-size: 36px;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            10%, 30% {
+                transform: scale(1.1);
+            }
+            20%, 40% {
+                transform: scale(1.05);
+            }
+        }
+
+        .decoded-message p {
+            font-size: 20px;
+            color: #6c5b7b;
+            line-height: 1.6;
+        }
+
+        .button-container {
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .answer-btn {
+            padding: 15px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ff6b9d, #ff1744);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        .no-btn {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .celebration-content {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            text-align: center;
+            animation: celebrate 0.6s ease-out;
+            max-width: 500px;
+        }
+
+        @keyframes celebrate {
+            0% {
+                transform: scale(0) rotate(-180deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .celebration-content h2 {
+            font-size: 48px;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+        }
+
+        .celebration-content p {
+            font-size: 24px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .error-msg {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <div class="container">
+        <h1>🔐 Encrypted Valentine Message 🔐</h1>
+        
+        <div class="encrypted-section">
+            <p style="text-align: center; color: #c06c84; margin-bottom: 15px; font-weight: bold;">
+                CLASSIFIED TRANSMISSION - DECODE TO REVEAL
+            </p>
+            <div class="encrypted-message" id="encryptedMsg">
+                Xjmm zpv cf nz Wbmfoujof dvujf? 💕
+            </div>
+        </div>
+
+        <div class="hint">
+            💡 <strong>Decryption Hint:</strong> Each letter has been shifted forward by a certain number. Think simple... like the number of letters in "LOVE" minus one! 🔢
+        </div>
+
+        <div class="decode-section">
+            <label for="keyInput">Enter Cipher Key (shift number):</label>
+            <input type="number" id="keyInput" class="decode-input" placeholder="?">
+            <button class="decode-btn" onclick="decodeMessage()">DECODE MESSAGE</button>
+            <p class="error-msg" id="errorMsg">❌ Incorrect key! Try again...</p>
+        </div>
+
+        <div class="dog-image">
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&h=400&fit=crop" 
+                 alt="Two cute dogs" 
+                 title="Aren't we adorable? 🐕💕">
+            <p style="text-align: center; margin-top: 10px; color: #6c5b7b; font-style: italic;">
+                "These cuties are waiting for your answer!" 🐾
+            </p>
+        </div>
+
+        <div class="decoded-message" id="decodedMsg">
+            <h2>💖 MESSAGE DECODED! 💖</h2>
+            <p><strong>Will you be my Valentine cutie?</strong></p>
+        </div>
+
+        <div class="button-container" id="buttonContainer">
+            <button class="answer-btn yes-btn" onclick="sayYes()">YES! 💕</button>
+            <button class="answer-btn no-btn" id="noBtn" onclick="moveNoButton()">No</button>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration">
+        <div class="celebration-content">
+            <h2>🎉 YESSS! 🎉</h2>
+            <p>You made this Valentine's Day perfect! 💕</p>
+            <p style="font-size: 60px; margin-top: 20px;">💑❤️✨</p>
+            <p style="font-size: 18px; margin-top: 20px; color: #666;">
+                Happy Valentine's Day, cutie! 🥰
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('float-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            document.getElementById('heartsBg').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 10000);
+        }
+
+        setInterval(createFloatingHeart, 400);
+
+        // Caesar cipher decoder
+        function decodeMessage() {
+            const key = parseInt(document.getElementById('keyInput').value);
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (key === 3) {
+                document.getElementById('decodedMsg').style.display = 'block';
+                document.getElementById('buttonContainer').style.display = 'flex';
+                errorMsg.style.display = 'none';
+                
+                // Scroll to decoded message
+                document.getElementById('decodedMsg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                errorMsg.style.display = 'block';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // Allow Enter key to decode
+        document.getElementById('keyInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                decodeMessage();
+            }
+        });
+
+        // Make "No" button run away
+        function moveNoButton() {
+            const btn = document.getElementById('noBtn');
+            const container = document.querySelector('.container');
+            const maxX = window.innerWidth - 200;
+            const maxY = window.innerHeight - 100;
+            
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            btn.style.zIndex = '1000';
+        }
+
+        // Celebration when "Yes" is clicked
+        function sayYes() {
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'flex';
+            
+            // Create confetti hearts
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-50px';
+                    confetti.style.fontSize = '30px';
+                    confetti.innerHTML = ['❤️', '💕', '💖', '💗', '💝'][Math.floor(Math.random() * 5)];
+                    confetti.style.animation = 'floatUp 3s linear';
+                    confetti.style.pointerEvents = 'none';
+                    confetti.style.zIndex = '101';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
